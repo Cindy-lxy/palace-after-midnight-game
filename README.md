@@ -13,9 +13,10 @@
 index.html            页面骨架（封面、游戏画框、调查弹层、暂停/音乐按钮）
 style-cn.css          全部样式（像素画面、桌面撑满布局、移动端、追逐路线）
 story.js              剧情/文案/房间/热点/线索数据
-game-cn.js            游戏引擎（移动、交互、追逐、推理、结局、存档）
+game-allmaps.js       游戏引擎（移动、交互、追逐、推理、结局、存档）
 audio.js              Web Audio 程序化中式悬疑 BGM
-assets/               六张地图 map0~map5、主角四方向、怨灵等优化后的 WebP 像素素材
+embedded-maps-v2.js  六张内嵌场景地图，减少弱网与跨地域静态资源失败
+assets/               主角四方向、怨灵等优化后的 WebP 像素素材
 tests/                Playwright 回归测试（见下）
 ```
 
