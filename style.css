@@ -68,3 +68,8 @@ html,body{max-width:100%;overflow-x:hidden}
  .top-actions button{padding-inline:5px;font-size:10px}
  .heading h1{font-size:17px}
 }
+
+/* Draw the walk destination marker with CSS so no missing-glyph question mark can appear. */
+#destination{font-size:0;color:transparent}
+#destination::before,#destination::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;border-radius:2px;background:#f2d59d;box-shadow:0 0 7px rgba(242,213,157,.85);transform:translate(-50%,-50%)}
+#destination::after{transform:translate(-50%,-50%) rotate(90deg)}

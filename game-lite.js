@@ -29,7 +29,7 @@ function commit(){s.actions++;save();render();}
 function isDone(id){return ({lamp:s.flags.lit,cabinet:s.flags.cabinet,lanterns:s.flags.seasons,mirror:s.flags.clean,box:s.flags.box,slot:s.flags.gate,sideDoor:s.flags.scroll,altar:s.flags.altarRead,dresser:s.flags.dresserRead,niche:s.got.includes('blood'),shrine:s.got.includes('order')})[id];}
 function render(){
  const r=ROOMS[s.room];$('#roomName').textContent=r.name;$('#roomSub').textContent=r.sub;$('#roomNumber').textContent=r.mark;
- const image=BASE+'map'+s.room+'-lite.webp';if($('#mapImage').src!==image)$('#mapImage').src=image;$('#mapImage').alt=r.name+'像素地图';
+ const image=s.room===2&&window.PALACE_EMBEDDED_LIBRARY_MAP?window.PALACE_EMBEDDED_LIBRARY_MAP:BASE+'map'+s.room+'-lite.webp';if($('#mapImage').src!==image)$('#mapImage').src=image;$('#mapImage').alt=r.name+'像素地图';
  $('#hotspots').replaceChildren();
  for(const o of r.objects){const b=button('',()=>walkTo(o.stand,()=>inspect(o.id),o.waypoints),'hotspot'+(o.exit!==undefined?' exit':'')+(isDone(o.id)?' done':'')+(HIDE_SPOTS[o.id]?' hide-spot':'')+(chase.active&&HIDE_SPOTS[o.id]?' danger-ready':''));b.dataset.hot=o.id;b.setAttribute('aria-label',o.name);b.style.left=o.x+'%';b.style.top=o.y+'%';
  if(o.exit!==undefined)b.textContent=(o.id==='west'?'← ':'→ ')+o.name.replace('通往','').replace('返回','');else{const d=document.createElement('span');d.className='diamond';const n=document.createElement('span');n.className='hotname';n.textContent=(HIDE_SPOTS[o.id]?'【藏身】':'')+o.name;b.append(d,n);}b.disabled=!active||!!s.ending;$('#hotspots').append(b);}
