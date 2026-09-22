@@ -7,8 +7,8 @@ let s=fresh(),active=false,selected=null,combining=false,path=[],afterWalk=null,
 let chase={active:false,kind:1,gx:0,gy:0,mode:'hunt',hide:null,ghostTimer:0,waitSince:0};
 const keys=new Set();
 const FACING_LABELS={up:'向上 · 背面',down:'向下 · 正面',left:'向左 · 左侧面',right:'向右 · 右侧面'};
-const SPRITES=Object.fromEntries(Object.keys(FACING_LABELS).map(dir=>{const image=new Image();image.src=BASE+'player-'+dir+'.webp';return [dir,image];}));
-function renderFacing(){const dir=FACING_LABELS[s.facing]?s.facing:'down';const image=$('#player img');$('#player').dataset.facing=dir;if(image.src!==SPRITES[dir].src)image.src=SPRITES[dir].src;image.alt='像素角色：'+FACING_LABELS[dir];}
+const SPRITES=Object.fromEntries(Object.keys(FACING_LABELS).map(dir=>[dir,BASE+'player-'+dir+'.webp']));
+function renderFacing(){const dir=FACING_LABELS[s.facing]?s.facing:'down';const image=$('#player img');$('#player').dataset.facing=dir;if(image.src!==SPRITES[dir])image.src=SPRITES[dir];image.alt='像素角色：'+FACING_LABELS[dir];}
 function face(dir){s.facing=dir;renderFacing();}
 const plain=x=>x&&typeof x==='object'&&!Array.isArray(x);
 const validSave=x=>plain(x)&&[2,3].includes(x.v)&&Number.isInteger(x.room)&&!!ROOMS[x.room]&&Number.isInteger(x.x)&&x.x>=2&&x.x<=21&&Number.isInteger(x.y)&&x.y>=7&&x.y<=15&&Array.isArray(x.inv)&&x.inv.every(i=>Object.hasOwn(ITEMS,i))&&Array.isArray(x.got)&&x.got.every(i=>Object.hasOwn(ITEMS,i))&&Array.isArray(x.notes)&&x.notes.length>0&&x.notes.every(n=>Object.hasOwn(NOTES,n))&&plain(x.flags)&&Object.values(x.flags).every(v=>typeof v==='boolean')&&plain(x.hints)&&Object.values(x.hints).every(v=>Number.isInteger(v)&&v>=0)&&[null,'justice','together','solo'].includes(x.ending)&&Array.isArray(x.visited)&&x.visited.every(r=>Number.isInteger(r)&&!!ROOMS[r])&&Number.isInteger(x.actions)&&x.actions>=0&&(x.pending===undefined||[0,1,2].includes(x.pending));
