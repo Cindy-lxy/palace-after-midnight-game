@@ -7,7 +7,7 @@ let s=fresh(),active=false,selected=null,combining=false,path=[],afterWalk=null,
 let chase={active:false,kind:1,gx:0,gy:0,mode:'hunt',hide:null,ghostTimer:0,waitSince:0};
 const keys=new Set();
 const FACING_LABELS={up:'向上 · 背面',down:'向下 · 正面',left:'向左 · 左侧面',right:'向右 · 右侧面'};
-const SPRITES=Object.fromEntries(Object.keys(FACING_LABELS).map(dir=>[dir,BASE+'player-'+dir+'.webp']));
+const SPRITES=Object.fromEntries(Object.keys(FACING_LABELS).map(dir=>[dir,BASE+'player-'+dir+'-lite.webp']));
 function renderFacing(){const dir=FACING_LABELS[s.facing]?s.facing:'down';const image=$('#player img');$('#player').dataset.facing=dir;if(image.src!==SPRITES[dir])image.src=SPRITES[dir];image.alt='像素角色：'+FACING_LABELS[dir];}
 function face(dir){s.facing=dir;renderFacing();}
 const plain=x=>x&&typeof x==='object'&&!Array.isArray(x);
@@ -29,7 +29,7 @@ function commit(){s.actions++;save();render();}
 function isDone(id){return ({lamp:s.flags.lit,cabinet:s.flags.cabinet,lanterns:s.flags.seasons,mirror:s.flags.clean,box:s.flags.box,slot:s.flags.gate,sideDoor:s.flags.scroll,altar:s.flags.altarRead,dresser:s.flags.dresserRead,niche:s.got.includes('blood'),shrine:s.got.includes('order')})[id];}
 function render(){
  const r=ROOMS[s.room];$('#roomName').textContent=r.name;$('#roomSub').textContent=r.sub;$('#roomNumber').textContent=r.mark;
- const image=BASE+'map'+s.room+'.webp';if($('#mapImage').src!==image)$('#mapImage').src=image;$('#mapImage').alt=r.name+'像素地图';
+ const image=BASE+'map'+s.room+'-lite.webp';if($('#mapImage').src!==image)$('#mapImage').src=image;$('#mapImage').alt=r.name+'像素地图';
  $('#hotspots').replaceChildren();
  for(const o of r.objects){const b=button('',()=>walkTo(o.stand,()=>inspect(o.id),o.waypoints),'hotspot'+(o.exit!==undefined?' exit':'')+(isDone(o.id)?' done':'')+(HIDE_SPOTS[o.id]?' hide-spot':'')+(chase.active&&HIDE_SPOTS[o.id]?' danger-ready':''));b.dataset.hot=o.id;b.setAttribute('aria-label',o.name);b.style.left=o.x+'%';b.style.top=o.y+'%';
  if(o.exit!==undefined)b.textContent=(o.id==='west'?'← ':'→ ')+o.name.replace('通往','').replace('返回','');else{const d=document.createElement('span');d.className='diamond';const n=document.createElement('span');n.className='hotname';n.textContent=(HIDE_SPOTS[o.id]?'【藏身】':'')+o.name;b.append(d,n);}b.disabled=!active||!!s.ending;$('#hotspots').append(b);}
