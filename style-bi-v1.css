@@ -49,9 +49,57 @@
  footer{margin-top:18px}
 }
 
-/* Cross-device safety: preserve artwork proportions, notches and comfortable controls. */
+/* Bilingual controls; language changes never rebuild a puzzle or clear its state. */
+[data-language-toggle]{white-space:nowrap;min-width:44px;min-height:40px;color:var(--gold)}
+.panel-heading [data-language-toggle]{font:12px/1.4 sans-serif;letter-spacing:0;padding:8px}
+.lang-en .brand{font-size:15px;letter-spacing:1px;max-width:360px}
+.lang-en h1,.lang-en h2,.lang-en .eyebrow,.lang-en .step,.lang-en .inventory-top strong,.lang-en .aside-note>span{letter-spacing:.4px}
+.lang-en .cover{overflow:auto;align-items:safe center}
+.lang-en .cover-content{max-width:800px}
+.lang-en .cover-content h2{letter-spacing:1px;font-size:clamp(28px,4vw,58px);line-height:1.13}
+.lang-en .cover-content h2 span{letter-spacing:.5px;line-height:1.65}
+.lang-en .cover-content p{letter-spacing:.2px;font-family:inherit;line-height:1.8}
+.lang-en .cover-content .eyebrow{letter-spacing:1px;line-height:1.6}
+.lang-en .scene-top{height:auto;min-height:57px;gap:8px;padding-block:10px}
+.lang-en .scene-top>div:first-child{min-width:0;flex-wrap:wrap;gap:6px 10px}
+.lang-en .scene-top strong{font-size:16px;letter-spacing:.2px}
+.lang-en .scene-actions{flex-shrink:0}
+.lang-en .hotspot.exit{width:76px;max-width:18%;font-size:10px;line-height:1.2;overflow-wrap:anywhere;padding:4px}
+.lang-en .hotspot .hotname{white-space:normal;width:max-content;max-width:150px;line-height:1.4;text-align:center}
+.lang-en .wheel,.lang-en .season-key{font:12px/1.2 sans-serif;padding:3px;overflow-wrap:anywhere}
+.lang-en .sequence{letter-spacing:.5px}
+.lang-en .puzzle-row{gap:8px}
+.lang-en .wheel-wrap{min-width:0}
+.lang-en .evidence-select{min-width:0;max-width:100%;font-size:12px}
+.lang-en .panel-heading{letter-spacing:.8px;gap:8px}
+.lang-en .panel-tools{gap:5px;flex-shrink:0}
+.lang-en .clue-card p{font-family:inherit;letter-spacing:0}
+.lang-en footer{flex-wrap:wrap;line-height:1.6}
+@media(min-width:761px){.lang-en .top{height:auto;min-height:85px;gap:15px;flex-wrap:wrap;padding-block:12px}.lang-en .top-actions{margin-left:auto}.lang-en .version{display:none}}
+@media(max-width:760px){
+ .lang-en .top{padding:10px 12px}.lang-en .brand{font-size:14px;max-width:100%}.lang-en .top-actions{width:100%;justify-content:flex-end;gap:2px}
+ .lang-en .heading h1{font-size:19px;line-height:1.5}.lang-en .heading .eyebrow{font-size:9px;line-height:1.6}
+ .lang-en .cover{padding:18px;align-items:flex-start}.lang-en .cover-content h2{font-size:25px;margin:8px 0}
+ .lang-en .cover-content h2 br{display:block}.lang-en .cover-content h2 span{font-size:10px;margin-top:8px}
+ .lang-en .cover-content p{font-size:11px;line-height:1.6;margin:10px 0}
+ .lang-en .cover-content .eyebrow{font-size:8px}.lang-en .cover-content .primary{min-height:40px}
+ .lang-en .scene-top{padding:8px;min-height:57px}.lang-en .scene-top strong{font-size:13px}.lang-en .scene-top #roomNumber{font-size:14px;padding-right:5px}
+ .lang-en .scene-top button{font-size:10px;padding:6px}.lang-en .scene-top small{display:none}
+ .lang-en .hotspot.exit{width:63px;font-size:9px}.lang-en .hotspot .hotname{max-width:105px;font-size:10px}
+ .lang-en .hotspot[data-hot="shelfNook"] .hotname{left:0}
+ .lang-en .step{font-size:10px;line-height:1.5}.lang-en .step i{flex-shrink:0}
+ .lang-en .inventory-top strong{font-size:11px}.lang-en .inventory-top button{font-size:10px}
+ .lang-en .panel-heading{gap:6px}.lang-en .panel-tools{gap:2px}.lang-en #panelMusicBtn{font-size:11px;padding:4px}
+ .lang-en .wheel,.lang-en .season-key{width:53px;font-size:11px;height:57px}.lang-en .wheel-wrap small{font-size:11px}
+ .lang-en #panelActions button.primary{min-width:0;max-width:100%}.lang-en .scene-footer{line-height:1.5}
+}
+
+/* GitHub Pages cross-device safety and missing-glyph protection. */
 html,body{max-width:100%;overflow-x:hidden}
 .map>img{object-fit:contain;object-position:center}
+#destination{font-size:0;color:transparent}
+#destination::before,#destination::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;border-radius:2px;background:#f2d59d;box-shadow:0 0 7px rgba(242,213,157,.85);transform:translate(-50%,-50%)}
+#destination::after{transform:translate(-50%,-50%) rotate(90deg)}
 @media(min-width:1001px){
  aside{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 }
@@ -59,7 +107,8 @@ html,body{max-width:100%;overflow-x:hidden}
  .top{padding-top:max(10px,env(safe-area-inset-top));padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
  main{padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
  .mobile-controls{padding-bottom:max(10px,env(safe-area-inset-bottom));padding-left:max(12px,env(safe-area-inset-left));padding-right:max(12px,env(safe-area-inset-right))}
- .top-actions button,.scene-top button,.inventory-top button,[data-music-toggle]{min-width:44px;min-height:44px}
+ .top-actions button,.scene-top button,.inventory-top button,[data-music-toggle],[data-language-toggle]{min-width:44px;min-height:44px}
+ dialog{max-height:calc(100dvh - 24px);overflow:auto}
 }
 @media(max-width:360px){
  .brand small,.version{display:none}
@@ -68,8 +117,3 @@ html,body{max-width:100%;overflow-x:hidden}
  .top-actions button{padding-inline:5px;font-size:10px}
  .heading h1{font-size:17px}
 }
-
-/* Draw the walk destination marker with CSS so no missing-glyph question mark can appear. */
-#destination{font-size:0;color:transparent}
-#destination::before,#destination::after{content:"";position:absolute;left:50%;top:50%;width:14px;height:2px;border-radius:2px;background:#f2d59d;box-shadow:0 0 7px rgba(242,213,157,.85);transform:translate(-50%,-50%)}
-#destination::after{transform:translate(-50%,-50%) rotate(90deg)}
